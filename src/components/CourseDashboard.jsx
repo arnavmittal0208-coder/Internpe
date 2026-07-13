@@ -301,6 +301,64 @@ export default function CourseDashboard({ activeTab }) {
     return () => clearInterval(timerRef.current);
   }, [quizStarted, timeLeft, quizFinished]);
 
+  // Reset overlays and clear timers when active lecture changes
+  useEffect(() => {
+    setIsPlaying(false);
+    setShowEndScreen(false);
+    setShowPlayPauseOverlay(false);
+    setOverlayFadeOut(false);
+    if (overlayTimeoutRef.current) clearTimeout(overlayTimeoutRef.current);
+    if (overlayTimeout2Ref.current) clearTimeout(overlayTimeout2Ref.current);
+
+    // If Next Lesson was clicked from the end screen, immediately start playback on the new video
+    if (autoPlayNextRef.current) {
+      autoPlayNextRef.current = false;
+      handleStartPlayback();
+    }
+  }, [activeLec?.id]);
+
+  // Intercept native video fullscreen and redirect it to the parent wrapper
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      const video = videoRef.current;
+      const wrapper = videoWrapperRef.current;
+      if (!video || !wrapper) return;
+
+      const currentFullscreenEl = document.fullscreenElement || 
+                                   document.webkitFullscreenElement || 
+                                   document.mozFullScreenElement || 
+                                   document.msFullscreenElement;
+                                   
+      if (currentFullscreenEl === video) {
+        // Exit video fullscreen and immediately escalate to wrapper fullscreen
+        if (document.exitFullscreen) {
+          document.exitFullscreen().then(() => {
+            if (wrapper.requestFullscreen) {
+              wrapper.requestFullscreen();
+            }
+          }).catch((err) => console.log('Fullscreen redirect error:', err));
+        } else if (document.webkitExitFullscreen) {
+          document.webkitExitFullscreen();
+          if (wrapper.webkitRequestFullscreen) {
+            wrapper.webkitRequestFullscreen();
+          }
+        }
+      }
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+    document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+    document.addEventListener('MSFullscreenChange', handleFullscreenChange);
+
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
+      document.removeEventListener('mozfullscreenchange', handleFullscreenChange);
+      document.removeEventListener('MSFullscreenChange', handleFullscreenChange);
+    };
+  }, []);
+
   if (!course) {
     return (
       <div className="container error-screen">
@@ -400,64 +458,6 @@ export default function CourseDashboard({ activeTab }) {
       }, 150);
     }, 800);
   };
-
-  // Reset overlays and clear timers when active lecture changes
-  useEffect(() => {
-    setIsPlaying(false);
-    setShowEndScreen(false);
-    setShowPlayPauseOverlay(false);
-    setOverlayFadeOut(false);
-    if (overlayTimeoutRef.current) clearTimeout(overlayTimeoutRef.current);
-    if (overlayTimeout2Ref.current) clearTimeout(overlayTimeout2Ref.current);
-
-    // If Next Lesson was clicked from the end screen, immediately start playback on the new video
-    if (autoPlayNextRef.current) {
-      autoPlayNextRef.current = false;
-      handleStartPlayback();
-    }
-  }, [activeLec?.id]);
-
-  // Intercept native video fullscreen and redirect it to the parent wrapper
-  useEffect(() => {
-    const handleFullscreenChange = () => {
-      const video = videoRef.current;
-      const wrapper = videoWrapperRef.current;
-      if (!video || !wrapper) return;
-
-      const currentFullscreenEl = document.fullscreenElement || 
-                                   document.webkitFullscreenElement || 
-                                   document.mozFullScreenElement || 
-                                   document.msFullscreenElement;
-                                   
-      if (currentFullscreenEl === video) {
-        // Exit video fullscreen and immediately escalate to wrapper fullscreen
-        if (document.exitFullscreen) {
-          document.exitFullscreen().then(() => {
-            if (wrapper.requestFullscreen) {
-              wrapper.requestFullscreen();
-            }
-          }).catch((err) => console.log('Fullscreen redirect error:', err));
-        } else if (document.webkitExitFullscreen) {
-          document.webkitExitFullscreen();
-          if (wrapper.webkitRequestFullscreen) {
-            wrapper.webkitRequestFullscreen();
-          }
-        }
-      }
-    };
-
-    document.addEventListener('fullscreenchange', handleFullscreenChange);
-    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
-    document.addEventListener('mozfullscreenchange', handleFullscreenChange);
-    document.addEventListener('MSFullscreenChange', handleFullscreenChange);
-
-    return () => {
-      document.removeEventListener('fullscreenchange', handleFullscreenChange);
-      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
-      document.removeEventListener('mozfullscreenchange', handleFullscreenChange);
-      document.removeEventListener('MSFullscreenChange', handleFullscreenChange);
-    };
-  }, []);
 
   function toggleFullscreen() {
     const wrapper = videoWrapperRef.current;
