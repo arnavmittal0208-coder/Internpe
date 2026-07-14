@@ -157,8 +157,8 @@ export default function LandingPage() {
           <div className="about-visual">
             <div className="about-image-wrapper">
               <img 
-                src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80" 
-                alt="Professional working on laptop"
+                src="/about.jpg" 
+                alt="Students studying together around laptop"
                 className="about-image"
               />
               <div className="badge-experience">
