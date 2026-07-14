@@ -308,11 +308,14 @@ p {
   width: 36px;
   height: 36px;
   border-radius: var(--radius-md);
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  background: #ffffff;
+  border: 1px solid var(--neutral-200);
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  padding: 0;
 }
 
 .logo-text-gradient {

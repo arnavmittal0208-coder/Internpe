@@ -605,13 +605,15 @@ export default function AdminDashboard({ activeTab }) {
             width: '32px',
             height: '32px',
             borderRadius: '8px',
-            background: 'var(--primary-gradient)',
-            color: '#fff',
+            background: '#ffffff',
+            border: '1px solid var(--neutral-200)',
             display: 'grid',
             placeItems: 'center',
-            fontWeight: '700',
-            fontSize: '15px'
-          }}>Ip</div>
+            overflow: 'hidden',
+            padding: 0
+          }}>
+            <img src="/logo.png" alt="Internpe Logo" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          </div>
           <h2 style={{ margin: 0, fontSize: '18px', fontWeight: '700' }}>Admin Portal Dashboard</h2>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>

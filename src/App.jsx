@@ -96,7 +96,7 @@ export default function App() {
             <div className="footer-brand-block">
               <div className="logo-brand" onClick={() => navigate('/')}>
                 <div className="logo-icon">
-                  <span className="logo-text-gradient">Ip</span>
+                  <img src="/logo.png" alt="Internpe Logo" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
                 <span className="brand-name">Internpe</span>
               </div>
