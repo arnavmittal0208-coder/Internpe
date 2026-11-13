@@ -248,6 +248,7 @@ Through this project I gained practical experience in:
 # 👨‍💻 Developed By
 
 **Arnav Mittal**
+**Rajan Kumar**
 **Nandini Jha**
 **Vanshika**
 
