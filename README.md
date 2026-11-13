@@ -247,10 +247,9 @@ Through this project I gained practical experience in:
 
 # 👨‍💻 Developed By
 
-**Arnav Mittal**
-**Rajan Kumar**
-**Nandini Jha**
-**Vanshika**
+**Arnav Mittal-24BCS10123**
+**Rajan Kumar-24BCS12890**
+**Raghav Guleria-24BCS10988**
 
 
 Computer Science Engineering Student
