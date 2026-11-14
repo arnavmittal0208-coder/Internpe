@@ -248,6 +248,8 @@ Through this project I gained practical experience in:
 # 👨‍💻 Developed By
 
 **Arnav Mittal-24BCS10123**
+**Nandini Jha**
+**Vanshika**
 **Rajan Kumar-24BCS12890**
 **Raghav Guleria-24BCS10988**
 
